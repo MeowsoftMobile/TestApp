@@ -3,9 +3,9 @@ package com.meowsoft.testapp.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,8 +22,14 @@ class MainActivity : ComponentActivity() {
             TestAppTheme {
                 val viewModel = hiltViewModel<MainActivityViewModel>()
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Button(
+                        onClick = viewModel::getData
+                    ) {
+                        Text(text = "Get Data")
+                    }
                 }
             }
         }
