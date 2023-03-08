@@ -1,4 +1,4 @@
-package com.meowsoft.testapp.domain.model
+package com.meowsoft.testapp.domain.weather.model
 
 import androidx.annotation.DrawableRes
 import com.meowsoft.testapp.R

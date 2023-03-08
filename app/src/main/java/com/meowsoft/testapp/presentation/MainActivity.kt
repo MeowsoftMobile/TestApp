@@ -25,11 +25,7 @@ class MainActivity : ComponentActivity() {
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Button(
-                        onClick = viewModel::getData
-                    ) {
-                        Text(text = "Get Data")
-                    }
+                   
                 }
             }
         }

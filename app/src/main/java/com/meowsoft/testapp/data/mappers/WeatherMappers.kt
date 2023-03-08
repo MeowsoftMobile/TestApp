@@ -1,9 +1,9 @@
 package com.meowsoft.testapp.data.mappers
 
 import com.meowsoft.testapp.data.remote.dto.WeatherDataDto
-import com.meowsoft.testapp.domain.model.Forecast
-import com.meowsoft.testapp.domain.model.WeatherData
-import com.meowsoft.testapp.domain.model.WeatherType
+import com.meowsoft.testapp.domain.weather.model.Forecast
+import com.meowsoft.testapp.domain.weather.model.WeatherData
+import com.meowsoft.testapp.domain.weather.model.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.floor
