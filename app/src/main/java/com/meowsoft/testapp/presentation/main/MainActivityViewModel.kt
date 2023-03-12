@@ -1,4 +1,4 @@
-package com.meowsoft.testapp.presentation
+package com.meowsoft.testapp.presentation.main
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -31,7 +31,7 @@ class MainActivityViewModel @Inject constructor(
                         location.latitude,
                         location.longitude
                     )
-                    state = when(result) {
+                    state = when (result) {
                         is Request.Success -> {
                             state.copy(isLoading = false, forecast = result.data, error = null)
                         }
