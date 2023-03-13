@@ -9,7 +9,7 @@
         android:id="@+id/locationFragment"
         android:name="com.meowsoft.testapp.presentation.location.LocationFragment"
         android:label="fragment_location"
-        tools:layout="@layout/fragment_location" >
+        tools:layout="@layout/fragment_location">
         <action
             android:id="@+id/action_locationFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />
@@ -18,14 +18,14 @@
         android:id="@+id/weatherFragment"
         android:name="com.meowsoft.testapp.presentation.weather.WeatherFragment"
         android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" >
+        tools:layout="@layout/fragment_weather">
         <argument
             android:name="arg_latitude"
-            app:argType="float"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="float" />
         <argument
             android:name="arg_longitude"
-            app:argType="float"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="float" />
     </fragment>
 </navigation>

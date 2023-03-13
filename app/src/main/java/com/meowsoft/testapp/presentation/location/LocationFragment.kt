@@ -61,8 +61,7 @@ class LocationFragment : Fragment() {
                     .onEach { state ->
                         Log.d("TestLogs", "new state: ${state::class.simpleName}")
 
-                        if( state is LocationState.LocationValidated) {
-
+                        if (state is LocationState.LocationValidated) {
                         }
                     }
                     .collect()
