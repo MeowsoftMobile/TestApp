@@ -1,17 +1,17 @@
 package com.meowsoft.testapp.presentation.main
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.meowsoft.testapp.domain.common.Request
 import com.meowsoft.testapp.domain.location.LocationTracker
 import com.meowsoft.testapp.domain.weather.WeatherRepository
 import com.meowsoft.testapp.domain.weather.WeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import com.meowsoft.testapp.domain.common.Request
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(

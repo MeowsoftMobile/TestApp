@@ -2,8 +2,8 @@ package com.meowsoft.testapp.data.di
 
 import com.meowsoft.testapp.data.OpenMeteoWeatherRepository
 import com.meowsoft.testapp.data.location.LocationTrackerImpl
-import com.meowsoft.testapp.domain.weather.WeatherRepository
 import com.meowsoft.testapp.domain.location.LocationTracker
+import com.meowsoft.testapp.domain.weather.WeatherRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.meowsoft.testapp.R
 import com.meowsoft.testapp.databinding.ActivityMainBinding
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         permissionRequester = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            viewModel.getForecast()
+//            viewModel.getForecast()
         }
 
         permissionRequester
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host_fragment_content_nav
-         ) as NavHostFragment
+        ) as NavHostFragment
         val navController = navHostFragment.navController
     }
 }

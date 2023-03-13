@@ -1,32 +1,27 @@
 package com.meowsoft.testapp.presentation.location
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.meowsoft.testapp.presentation.location.composables.LocationFragmentContent
+import com.meowsoft.testapp.presentation.location.state.LocationEvent
+import com.meowsoft.testapp.presentation.location.state.LocationState
+import com.meowsoft.testapp.presentation.ui.theme.TestAppTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 
+@AndroidEntryPoint
 class LocationFragment : Fragment() {
+
+    private val viewModel by viewModels<LocationFragmentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,64 +30,42 @@ class LocationFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                ScaffoldingContent()
+                TestAppTheme {
+                    val locationState = viewModel.locationState.collectAsState()
+                    LocationFragmentContent(
+                        locationState,
+                        ::onConfirmClicked
+                    )
+                }
             }
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LocationFragment()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeState()
+        viewModel.handleEvent(LocationEvent.ScreenOpened)
     }
-}
 
-@Preview
-@Composable
-fun ScaffoldingContent() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        LabeledEditText(
-            labelText = "Latitude"
+    private fun onConfirmClicked(latitude: String, longitude: String) {
+        viewModel.handleEvent(
+            LocationEvent.ConfirmClicked(latitude, longitude)
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        LabeledEditText(
-            labelText = "Longitude"
-        )
-        Spacer(modifier = Modifier.fillMaxHeight(0.2f))
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(),
-            onClick = { /*TODO*/ }
-        ) {
-            Text(text = "Get Weather")
-        }
     }
-}
 
-@Composable
-fun LabeledEditText(
-    labelText: String
-) {
-    Column {
-        Text(text = labelText)
-        Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent
-            ),
-            shape = CircleShape,
-            value = "SomeValue",
-            onValueChange = {}
-        )
+    private fun observeState() {
+        lifecycleScope
+            .launchWhenCreated {
+                viewModel
+                    .locationState
+                    .onEach { state ->
+                        Log.d("TestLogs", "new state: ${state::class.simpleName}")
+
+                        if( state is LocationState.LocationValidated) {
+
+                        }
+                    }
+                    .collect()
+            }
     }
 }

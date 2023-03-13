@@ -2,8 +2,8 @@ package com.meowsoft.testapp.data
 
 import com.meowsoft.testapp.data.mappers.toForecast
 import com.meowsoft.testapp.data.remote.OpenMeteoAPI
-import com.meowsoft.testapp.domain.weather.WeatherRepository
 import com.meowsoft.testapp.domain.common.Request
+import com.meowsoft.testapp.domain.weather.WeatherRepository
 import com.meowsoft.testapp.domain.weather.model.Forecast
 import javax.inject.Inject
 
