@@ -21,11 +21,9 @@
         tools:layout="@layout/fragment_weather">
         <argument
             android:name="arg_latitude"
-            android:defaultValue="0"
-            app:argType="float" />
+            app:argType="string" />
         <argument
             android:name="arg_longitude"
-            android:defaultValue="0"
-            app:argType="float" />
+            app:argType="string" />
     </fragment>
 </navigation>

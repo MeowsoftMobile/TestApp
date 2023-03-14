@@ -4,7 +4,6 @@ import android.Manifest
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.meowsoft.testapp.R
@@ -13,8 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val viewModel: MainActivityViewModel by viewModels()
     private lateinit var permissionRequester: ActivityResultLauncher<Array<String>>
 
     private lateinit var binding: ActivityMainBinding
@@ -27,9 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         permissionRequester = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-//            viewModel.getForecast()
-        }
+        ) {}
 
         permissionRequester
             .launch(

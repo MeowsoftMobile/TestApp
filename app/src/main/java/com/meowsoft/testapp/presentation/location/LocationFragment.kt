@@ -75,8 +75,8 @@ class LocationFragment : Fragment() {
 
     private fun navigateToForecast() {
         val action = LocationFragmentDirections.actionLocationFragmentToWeatherFragment(
-            argLatitude = viewModel.latInput.value.toFloat(),
-            argLongitude = viewModel.longInput.value.toFloat()
+            argLatitude = viewModel.latInput.value,
+            argLongitude = viewModel.longInput.value
         )
         navController.navigate(action)
     }
