@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.meowsoft.testapp'
+    namespace 'com.meowsoft.weatherapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.meowsoft.testapp"
+        applicationId "com.meowsoft.weatherapp"
         minSdk 26
         targetSdk 33
         versionCode 1
