@@ -29,6 +29,11 @@ class LocationFragment : Fragment() {
     private val viewModel by viewModels<LocationFragmentViewModel>()
     private lateinit var navController: NavController
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeState()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +68,6 @@ class LocationFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        observeState()
         viewModel.handleEvent(LocationEvent.ScreenOpened)
     }
 
