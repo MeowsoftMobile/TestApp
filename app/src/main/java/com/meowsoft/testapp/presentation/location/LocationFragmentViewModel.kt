@@ -43,17 +43,14 @@ class LocationFragmentViewModel @Inject constructor(
     fun handleEvent(event: LocationEvent) {
         when (event) {
             is LocationEvent.ScreenOpened -> getLocation()
-            is LocationEvent.ConfirmClicked -> validateLocation(event.latitude, event.longitude)
+            is LocationEvent.ConfirmClicked -> validateLocation()
         }
     }
 
-    private fun validateLocation(
-        latitude: String,
-        longitude: String
-    ) {
+    private fun validateLocation() {
         // do some validation
-        val lat = latitude.toDouble()
-        val long = longitude.toDouble()
+        val lat = latInput.value.toDouble()
+        val long = longInput.value.toDouble()
 
         val location = ForecastLocation(
             latitude = lat,

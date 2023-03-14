@@ -12,8 +12,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.meowsoft.testapp.presentation.location.composables.LocationFragmentContent
 import com.meowsoft.testapp.presentation.location.state.LocationEvent
+import com.meowsoft.testapp.presentation.location.state.LocationState
 import com.meowsoft.testapp.presentation.ui.theme.TestAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -24,6 +27,7 @@ import kotlinx.coroutines.launch
 class LocationFragment : Fragment() {
 
     private val viewModel by viewModels<LocationFragmentViewModel>()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +60,9 @@ class LocationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = Navigation.findNavController(view)
+
         observeState()
         viewModel.handleEvent(LocationEvent.ScreenOpened)
     }
@@ -66,6 +73,14 @@ class LocationFragment : Fragment() {
         )
     }
 
+    private fun navigateToForecast() {
+        val action = LocationFragmentDirections.actionLocationFragmentToWeatherFragment(
+            argLatitude = viewModel.latInput.value.toFloat(),
+            argLongitude = viewModel.longInput.value.toFloat()
+        )
+        navController.navigate(action)
+    }
+
     private fun observeState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -73,6 +88,9 @@ class LocationFragment : Fragment() {
                     .locationState
                     .onEach { state ->
                         Log.d("TestLogs", "new state: ${state::class.simpleName}")
+                        if (state is LocationState.LocationValidated) {
+                            navigateToForecast()
+                        }
                     }
                     .collect()
             }
