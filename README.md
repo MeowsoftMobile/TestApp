@@ -1,4 +1,4 @@
-# TestApp
+# WeatherApp
 
 Sample training weather app. 
 
@@ -6,3 +6,4 @@ Sample training weather app.
 - StateFlow
 - Hilt
 - MVI
+- OpenMeteo API
