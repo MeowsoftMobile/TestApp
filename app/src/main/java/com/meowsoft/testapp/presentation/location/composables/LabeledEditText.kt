@@ -20,6 +20,7 @@ fun LabeledEditText(
     modifier: Modifier = Modifier,
     labelText: String = "",
     inputText: String = "",
+    isEnabled: Boolean = false,
     onTextChange: (String) -> Unit = {}
 ) {
     Column(
@@ -35,6 +36,7 @@ fun LabeledEditText(
                 unfocusedIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent
             ),
+            enabled = isEnabled,
             shape = CircleShape,
             value = inputText,
             onValueChange = onTextChange,

@@ -13,40 +13,39 @@ import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.meowsoft.testapp.presentation.location.state.LocationState
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun LocationFragmentContent(
-    state: State<LocationState>,
-    onConfirmClick: (lat: String, long: String) -> Unit
+    isLoading: Boolean,
+    latitude: MutableStateFlow<String>,
+    longitude: MutableStateFlow<String>,
+    error: String?,
+    onConfirmClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        val stateValue = state.value
+        val latState = latitude.collectAsState()
+        val longState = longitude.collectAsState()
 
-        val latInput = remember { mutableStateOf("") }
-        val longInput = remember { mutableStateOf("") }
-
-        if (stateValue.isLoading) {
+        if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.Center)
             )
             Log.d("TestLogs", "showingPB")
-        } else if (stateValue is LocationState.Error) {
+        } else if (error != null) {
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = stateValue.error ?: "No message"
+                text = error
             )
             Log.d("TestLogs", "NOT showingPB")
         }
@@ -57,29 +56,26 @@ fun LocationFragmentContent(
         ) {
             LabeledEditText(
                 labelText = "Latitude",
-                inputText = latInput.value,
+                inputText = latState.value,
+                isEnabled = isLoading.not(),
                 onTextChange = {
-                    latInput.value = it
+                    latitude.value = it
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
             LabeledEditText(
                 labelText = "Longitude",
-                inputText = longInput.value,
+                inputText = longState.value,
+                isEnabled = isLoading.not(),
                 onTextChange = {
-                    longInput.value = it
+                    longitude.value = it
                 }
             )
             Spacer(modifier = Modifier.fillMaxHeight(0.2f))
             Button(
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick = {
-                    onConfirmClick(
-                        latInput.value,
-                        longInput.value
-                    )
-                }
+                onClick = onConfirmClick
             ) {
                 Text(text = "Get Weather")
             }

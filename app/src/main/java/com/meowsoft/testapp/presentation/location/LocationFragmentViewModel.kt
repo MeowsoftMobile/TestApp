@@ -10,6 +10,8 @@ import com.meowsoft.testapp.presentation.location.state.LocationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,8 +20,25 @@ class LocationFragmentViewModel @Inject constructor(
     private val locationTracker: LocationTracker
 ) : ViewModel() {
 
+    val latInput = MutableStateFlow("")
+    val longInput = MutableStateFlow("")
+
     private val _locationState = MutableStateFlow<LocationState>(LocationState.Default)
     val locationState: StateFlow<LocationState> = _locationState
+
+    init {
+        viewModelScope
+            .launch {
+                _locationState
+                    .onEach {
+                        if (it is LocationState.LocationObtained) {
+                            latInput.value = it.location?.latitude?.toString() ?: ""
+                            longInput.value = it.location?.longitude?.toString() ?: ""
+                        }
+                    }
+                    .stateIn(this)
+            }
+    }
 
     fun handleEvent(event: LocationEvent) {
         when (event) {
