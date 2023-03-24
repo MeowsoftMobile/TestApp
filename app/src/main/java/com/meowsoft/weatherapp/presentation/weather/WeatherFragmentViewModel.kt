@@ -2,13 +2,14 @@ package com.meowsoft.weatherapp.presentation.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.meowsoft.weatherapp.domain.common.Request
+import com.meowsoft.weatherapp.domain.common.Result
 import com.meowsoft.weatherapp.domain.location.model.ForecastLocation
 import com.meowsoft.weatherapp.domain.weather.WeatherRepository
 import com.meowsoft.weatherapp.domain.weather.model.Forecast
 import com.meowsoft.weatherapp.presentation.weather.state.WeatherFragmentEvent
 import com.meowsoft.weatherapp.presentation.weather.state.WeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class WeatherFragmentViewModel @Inject constructor(
 
     private fun getWeatherData(forecastLocation: ForecastLocation) {
         viewModelScope
-            .launch {
+            .launch(Dispatchers.IO) {
                 _weatherState.value = WeatherState.LoadingForecast
                 val result = weatherRepository
                     .getForecast(
@@ -48,10 +49,10 @@ class WeatherFragmentViewModel @Inject constructor(
         }
     }
 
-    private fun handleForecastResult(forecastResult: Request<Forecast>) {
+    private fun handleForecastResult(forecastResult: Result<Forecast>) {
         when (forecastResult) {
-            is Request.Success -> updateForecast(forecastResult.data)
-            is Request.Error -> requestError(forecastResult.message)
+            is Result.Success -> updateForecast(forecastResult.data)
+            is Result.Error -> requestError(forecastResult.message)
         }
     }
 

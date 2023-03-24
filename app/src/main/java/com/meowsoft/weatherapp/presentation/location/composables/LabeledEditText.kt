@@ -21,6 +21,7 @@ fun LabeledEditText(
     labelText: String = "",
     inputText: String = "",
     isEnabled: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Number,
     onTextChange: (String) -> Unit = {}
 ) {
     Column(
@@ -40,7 +41,7 @@ fun LabeledEditText(
             shape = CircleShape,
             value = inputText,
             onValueChange = onTextChange,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
         )
     }
 }

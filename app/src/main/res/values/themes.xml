@@ -2,6 +2,7 @@
 <resources>
 
     <style name="Theme.TestApp" parent="Theme.AppCompat.Light">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/blue900</item>
+        <item name="android:background">@color/blue200</item>
     </style>
 </resources>
