@@ -1,4 +1,4 @@
-package com.meowsoft.weatherapp.presentation.ui.theme
+package com.meowsoft.weatherapp.presentation.ui.theme // ktlint-disable filename
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -12,7 +12,7 @@ private val DarkColorPalette = darkColors(
     secondary = Teal200,
     background = Blue900,
     surface = Blue900,
-    secondaryVariant = Blue900,
+    secondaryVariant = Blue900
 )
 
 private val LightColorPalette = lightColors(

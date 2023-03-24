@@ -16,8 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.meowsoft.weatherapp.domain.location.model.ForecastLocation
 import com.meowsoft.weatherapp.presentation.location.composables.LocationFragmentContent
-import com.meowsoft.weatherapp.presentation.location.state.LocationEvent
-import com.meowsoft.weatherapp.presentation.location.state.LocationState
 import com.meowsoft.weatherapp.presentation.ui.theme.TestAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -46,12 +44,10 @@ class LocationFragment : Fragment() {
                 TestAppTheme {
                     with(viewModel) {
                         val state = locationState.collectAsState()
-
                         val locationNameInput = locationNameInput
-                        val stateValue = state.value
 
                         LocationFragmentContent(
-                           state.value,
+                            state.value,
                             locationNameInput,
                             ::onConfirmClicked
                         )

@@ -68,7 +68,8 @@ class LocationFragmentViewModel @Inject constructor(
     private fun handleLocationResult(locationResult: Result<ForecastLocation>) =
         when (locationResult) {
             is Result.Success -> updateLocationState(locationResult.data)
-            is Result.Error -> { /*TODO handle error*/ }
+            is Result.Error -> { /*TODO handle error*/
+            }
         }
 
     private suspend fun resolveLocation(locationName: String): Result<ForecastLocation> {
